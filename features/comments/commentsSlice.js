@@ -16,7 +16,7 @@ export const fetchComments = createAsyncThunk(
 );
 
 export const postComment = createAsyncThunk(
-    'comments/postComments',
+    'comments/postComment',
     async (payload, {dispatch, getState}) => {
         setTimeout(() => {
             const { comments } = getState();
@@ -34,7 +34,7 @@ const commentsSlice = createSlice({
     initialState: { isLoading: true, errMess: null, commentsArray: [] },
     reducers: {
         addComment: (state, action) => {
-            state.commentsArray.push(action.payload)
+            state.commentsArray.push(action.payload);
         }
     },
     extraReducers: (builder) => {
@@ -52,7 +52,7 @@ const commentsSlice = createSlice({
                 state.errMess = action.error
                     ? action.error.message
                     : 'Fetch failed';
-            })
+            });
     }
 });
 
