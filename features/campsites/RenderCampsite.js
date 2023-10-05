@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, PanResponder, Alert, Modal } from 'react-native';
+import { StyleSheet, Text, View, PanResponder, Alert, Modal, Share } from 'react-native';
 import { useRef } from 'react';
 import { Card, Icon } from 'react-native-elements';
 import * as Animatable from 'react-native-animatable'
@@ -43,7 +43,20 @@ const RenderCampsite = (props) => {
                 props.onShowModal();
             }
         }
-});
+    });
+
+    const shareCampsite = (title, message, url) => {
+        Share.share(
+            {
+                title,
+                message: `${title}: ${message} ${url}`,
+                url
+            },
+            {
+                dialogTitle: 'Share' + title
+            }
+        );
+    }
 
     if (campsite) {
         return (
@@ -86,13 +99,27 @@ const RenderCampsite = (props) => {
                             props.onShowModal()
                         }
                     />
+                    <Icon 
+                        name={'share'}
+                        type='font-awesome'
+                        color='#5637DD'
+                        raised
+                        reverse
+                        onPress={()=>
+                            shareCampsite(
+                                campsite.name,
+                                campsite.description,
+                                baseUrl + campsite.image
+                            )
+                        }
+                    />
                 </View>
             </Card>
             </Animatable.View>
         );
     }
     return <View />;
-};
+}
 
 const styles = StyleSheet.create({
     cardContainer: {
