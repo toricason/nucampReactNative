@@ -14,6 +14,7 @@ import { Icon } from 'react-native-elements';
 import logo from '../assets/images/logo.png';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/core';
 import { fetchPartners } from '../features/partners/partnersSlice';
 import { fetchCampsites } from '../features/campsites/campsitesSlice';
 import { fetchPromotions } from '../features/promotions/promotionsSlice';
@@ -147,15 +148,16 @@ const LoginNavigator = () => {
             <Stack.Screen
                 name='Login'
                 component={LoginScreen}
-                options={({ navigation }) => ({
+                options={({ navigation, route }) => ({
                     headerLeft: () => (
                         <Icon
-                            name='sign-in'
+                            name={getFocusedRouteNameFromRoute(route) === 'Register' ? 'user-plus' : 'sign-in'}
                             type='font-awesome'
                             iconStyle={styles.stackIcon}
                             onPress={() => navigation.toggleDrawer()}
                         />
-                    )
+                    ),
+                    headerTitle: getFocusedRouteNameFromRoute(route)
                 })}
             />
         </Stack.Navigator>
